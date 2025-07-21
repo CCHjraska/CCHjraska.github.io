@@ -1330,9 +1330,75 @@
             // =================================================================
             // 【第五步：在程式的最一開始執行讀取】
             // =================================================================
-            loadDataFromBackend();
+                        loadDataFromBackend();
 
         });
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzxSFCD_AXMReBhYrHnSh91JqqZa2P8NM6-6K9ZGmmisa6NAinU1krgJKLAjbhqfX3zIA/exec'; // Replace with your actual Apps Script URL
+
+  async function fetchData() {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
+
+      // Populate current borrow records
+      const borrowTable = document.getElementById('borrow-records');
+      const noRecords = document.getElementById('no-records');
+      borrowTable.innerHTML = '';
+      if (data.borrowing && data.borrowing.length > 0) {
+        noRecords.style.display = 'none';
+        data.borrowing.forEach(record => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="py-3 px-2 border-b">${record.item}</td>
+            <td class="py-3 px-2 border-b">${record.name}</td>
+            <td class="py-3 px-2 border-b">${record.department}</td>
+            <td class="py-3 px-2 border-b">${record.extension}</td>
+            <td class="py-3 px-2 border-b">${record.borrowDate}</td>
+            <td class="py-3 px-2 border-b">${record.returnDate}</td>
+            <td class="py-3 px-2 border-b">${record.status}</td>
+            <td class="py-3 px-2 border-b">操作</td>
+          `;
+          borrowTable.appendChild(row);
+        });
+      } else {
+        noRecords.style.display = 'block';
+      }
+
+      // Populate history records
+      const historyTable = document.getElementById('history-records-body');
+      const noHistory = document.getElementById('no-history');
+      historyTable.innerHTML = '';
+      if (data.history && data.history.length > 0) {
+        noHistory.style.display = 'none';
+        data.history.forEach(record => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="py-3 px-2 border-b">${record.item}</td>
+            <td class="py-3 px-2 border-b">${record.name}</td>
+            <td class="py-3 px-2 border-b">${record.department}</td>
+            <td class="py-3 px-2 border-b">${record.extension}</td>
+            <td class="py-3 px-2 border-b">${record.borrowDate}</td>
+            <td class="py-3 px-2 border-b">${record.actualReturnDate}</td>
+            <td class="py-3 px-2 border-b">${record.purpose || '-'}</td>
+          `;
+          historyTable.appendChild(row);
+        });
+      } else {
+        noHistory.style.display = 'block';
+      }
+
+    } catch (error) {
+      console.error('資料讀取失敗:', error);
+    }
+  }
+
+  fetchData();
+});
+</script>
+
 </body>
 </html>
