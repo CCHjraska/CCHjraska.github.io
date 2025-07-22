@@ -946,6 +946,10 @@
             // 管理者登入
             confirmAdminLogin.addEventListener('click', function() {
                 const password = adminPassword.value.trim();
+    // ====================== 確認這兩行偵錯碼一定在這裡 ======================
+    console.log("您輸入的密碼:", password, "| 類型:", typeof password);
+    console.log("從Sheet讀到的密碼:", adminPasswordValue, "| 類型:", typeof adminPasswordValue);
+    // =====================================================================
                 if (password == adminPasswordValue) {
                     isAdminMode = true;
                     adminLoginModal.style.display = 'none';
