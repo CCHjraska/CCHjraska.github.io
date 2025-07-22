@@ -946,7 +946,7 @@
             // 管理者登入
             confirmAdminLogin.addEventListener('click', function() {
                 const password = adminPassword.value.trim();
-                if (password === adminPasswordValue) {
+                if (password == adminPasswordValue) {
                     isAdminMode = true;
                     adminLoginModal.style.display = 'none';
                     
