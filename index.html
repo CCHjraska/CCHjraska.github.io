@@ -1270,7 +1270,7 @@
                     historyData = data.history || [];
                     
                     const passwordData = data.password && data.password.length > 0 ? data.password[0] : null;
-                    adminPasswordValue = passwordData ? passwordData.value : '8730';
+                    adminPasswordValue = passwordData ? String(passwordData.value) : '8730';
 
                     console.log('資料載入成功');
                     
